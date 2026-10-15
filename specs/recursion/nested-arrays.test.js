@@ -10,10 +10,26 @@
  */
 
 function nestedAdd(array) {
-  // write code here
+  console.log(array);
+
+  if (typeof array[0] === "object") {
+    array[0] = nestedAdd(array[0]);
+  }
+
+  if (typeof array[1] === "object") {
+    array[1] = nestedAdd(array[1]);
+  }
+
+  if (array.length === 1) return array[0];
+
+  if (typeof array[0] === "number" && typeof array[1] === "number") {
+    array[1] = array[0] + array[1];
+    array.shift();
+    return nestedAdd(array);
+  }
 }
 
-test.skip("nested arrays addition", () => {
+test("nested arrays addition", () => {
   expect(nestedAdd([1, 2, 3])).toEqual(6);
   expect(nestedAdd([1, [2], 3])).toEqual(6);
   expect(nestedAdd([[[[[[[[[5]]]]]]]]])).toEqual(5);
